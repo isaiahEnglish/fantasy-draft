@@ -1,2 +1,1 @@
-# FantasyDraft
-Code for FantasyDraft solution
+Program to streamline the fantasy football drafting experience.
