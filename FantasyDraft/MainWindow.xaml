@@ -9,6 +9,29 @@
         MinHeight="900" MinWidth="1600"
         Loaded="MainWindow_Loaded">
     <Grid>
-
+        <TabControl>
+            <TabItem Header="Fantasy Draft Big Board">
+                <AdornerDecorator>
+                    <Grid>
+                        
+                    </Grid>
+                </AdornerDecorator>
+            </TabItem>
+            <TabItem Header="Draft History">
+                <AdornerDecorator>
+                    <Grid>
+                        
+                    </Grid>
+                </AdornerDecorator>
+            </TabItem>
+            <TabItem Header="Settings">
+                <AdornerDecorator>
+                    <Grid>
+                        
+                    </Grid>
+                </AdornerDecorator>
+            </TabItem>
+        </TabControl>
+        
     </Grid>
 </Window>
