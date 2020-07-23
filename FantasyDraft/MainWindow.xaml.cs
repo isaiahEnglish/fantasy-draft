@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HtmlAgilityPack;
 
 namespace FantasyDraft
 {
@@ -27,7 +28,22 @@ namespace FantasyDraft
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            //WEBSCRAPING
+            var webGet = new HtmlWeb();
+            var document = webGet.Load("https://www.fantasypros.com/nfl/rankings/consensus-cheatsheets.php");
 
+            var metaTags = document.DocumentNode.SelectNodes("//meta");
+
+            if (metaTags != null)
+            {
+                foreach (var tag in metaTags)
+                {
+                    if (tag.Attributes["name"] != null && tag.Attributes["content"] != null)
+                    {
+                        MessageBox.Show(tag.Attributes["name"].Value);
+                    }
+                }
+            }
         }
     }
 }
