@@ -28,7 +28,17 @@ namespace FantasyDraft
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //WEBSCRAPING
+            //Scrape web for latest player data?
+            // if FootballPlayer table SQL records == null, then webscrape... if not, don't?
+            WebScrape();
+        }
+
+
+        /// <summary>
+        /// Scrape the fantasy website for football player ranks/info... should be in another class?
+        /// </summary>
+        private void WebScrape()
+        {
             var webGet = new HtmlWeb();
             var document = webGet.Load("https://www.fantasypros.com/nfl/rankings/consensus-cheatsheets.php");
 

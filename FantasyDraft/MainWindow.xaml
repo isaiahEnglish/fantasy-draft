@@ -15,7 +15,14 @@
                     <Grid>
                         <DataGrid Margin="285,180,285,179">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Select">
+                                <DataGridTemplateColumn Header="Select" Width="45">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Rank" Width="45">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             
@@ -29,7 +36,14 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Team">
+                                <DataGridTemplateColumn Header="Position" Width="60">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Team" Width="60">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
 
