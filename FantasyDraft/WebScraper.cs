@@ -26,7 +26,7 @@ namespace FantasyDraft
 
             foreach (var item in HeaderNames)
             {
-                Console.WriteLine(item.InnerText);
+               // Console.WriteLine(item.InnerText);
             }
         }
         

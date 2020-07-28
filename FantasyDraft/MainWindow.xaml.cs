@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HtmlAgilityPack;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace FantasyDraft
 {
@@ -31,8 +33,29 @@ namespace FantasyDraft
             //Scrape web for latest player data?
             // if FootballPlayer table SQL records == null, then webscrape... if not, don't?
             WebScrape();
+
+            //Timer code
+            DispatcherTimer dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Tick += dtTicker;
+            dt.Start();
         }
 
+        // amount of seconds each person gets per pick
+        private int decrement = 90;
+
+        // decrements the count of the ticker
+        private void dtTicker(object sender, EventArgs e)
+        {
+            decrement--;
+
+            // test case if person didn't choose a player in time
+            if(decrement < 0)
+            {
+                decrement = 0;
+            }
+            TimerLabel.Content = decrement.ToString();
+        }
 
         /// <summary>
         /// Scrape the fantasy website for football player ranks/info... should be in another class?
@@ -53,7 +76,7 @@ namespace FantasyDraft
                     if (tag != null)
                     {
                         //MessageBox.Show(tag.Attributes["full-name"].Value);
-                        MessageBox.Show(tag.InnerText);
+                        //MessageBox.Show(tag.InnerText);
                     }
                 }
             }
