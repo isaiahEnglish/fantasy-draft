@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="sea_otter.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ImageRepository\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="sea_otter.jpg" />
   </ItemGroup>
 
 </Project>

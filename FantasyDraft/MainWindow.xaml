@@ -15,17 +15,17 @@
                     <Grid>
                         <DataGrid Margin="285,180,285,179">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Select" Width="45">
+                                <DataGridTemplateColumn Header="Select" Width="45" CanUserSort="False">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            
+
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Header="Rank" Width="45">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            
+
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -50,8 +50,20 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Bye Week" Width="65">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Button x:Name="BtnDraftPlayer" Content="Draft Player" HorizontalAlignment="Left" Margin="347,729,0,0" VerticalAlignment="Top" Height="38" Width="108" Click="BtnDraftPlayer_Click" />
+                        <TickBar />
+                        <Label x:Name="LblTeamSelecting" Content="Team Picking" HorizontalAlignment="Left" Margin="1359,53,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                        <Image HorizontalAlignment="Left" Height="75" Margin="1349,100,0,0" VerticalAlignment="Top" Width="100" Source="sea_otter.jpg" Stretch="Fill" StretchDirection="Both"/>
+
 
                     </Grid>
                 </AdornerDecorator>
@@ -59,18 +71,18 @@
             <TabItem Header="Draft History">
                 <AdornerDecorator>
                     <Grid>
-                        
+
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
             <TabItem Header="Settings">
                 <AdornerDecorator>
                     <Grid>
-                        
+
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
         </TabControl>
-        
+
     </Grid>
 </Window>

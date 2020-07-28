@@ -41,19 +41,27 @@ namespace FantasyDraft
         {
             var webGet = new HtmlWeb();
             var document = webGet.Load("https://www.fantasypros.com/nfl/rankings/consensus-cheatsheets.php");
+            var espn = webGet.Load("https://fantasy.espn.com/football/players/projections");
 
-            var metaTags = document.DocumentNode.SelectNodes("//meta");
+            var metaTags = document.DocumentNode.SelectNodes("//span[@class='full-name']");
+            var espnMetaTags = document.DocumentNode.SelectNodes("//span[@class='position-eligibility']");
 
             if (metaTags != null)
             {
                 foreach (var tag in metaTags)
                 {
-                    if (tag.Attributes["name"] != null && tag.Attributes["content"] != null)
+                    if (tag != null)
                     {
-                        MessageBox.Show(tag.Attributes["name"].Value);
+                        //MessageBox.Show(tag.Attributes["full-name"].Value);
+                        MessageBox.Show(tag.InnerText);
                     }
                 }
             }
+        }
+
+        private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
