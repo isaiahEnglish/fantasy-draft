@@ -54,7 +54,7 @@ namespace FantasyDraft
             {
                 decrement = 0;
             }
-            TimerLabel.Content = decrement.ToString();
+            LblTimer.Content = decrement.ToString();
         }
 
         /// <summary>
@@ -84,7 +84,13 @@ namespace FantasyDraft
 
         private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
         {
-            
+            // when a player clicks the draft button, timer count is reset
+            decrement = 91;  
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

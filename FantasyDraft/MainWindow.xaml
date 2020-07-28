@@ -13,7 +13,10 @@
             <TabItem Header="Fantasy Draft Big Board">
                 <AdornerDecorator>
                     <Grid>
-                        <DataGrid Margin="285,180,285,179">
+                        <DataGrid Margin="285,180,285,179" SelectionChanged="DataGrid_SelectionChanged">
+                            <DataGrid.CellStyle>
+                                <Style/>
+                            </DataGrid.CellStyle>
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Select" Width="45" CanUserSort="False">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -62,7 +65,7 @@
                         <Button x:Name="BtnDraftPlayer" Content="Draft Player" HorizontalAlignment="Left" Margin="347,729,0,0" VerticalAlignment="Top" Height="38" Width="108" Click="BtnDraftPlayer_Click" />
                         <Label x:Name="LblTeamSelecting" Content="Team Picking" HorizontalAlignment="Left" Margin="1359,53,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                         <Image HorizontalAlignment="Left" Height="75" Margin="1349,100,0,0" VerticalAlignment="Top" Width="100" Source="sea_otter.jpg" Stretch="Fill" StretchDirection="Both"/>
-                        <Label x:Name="TimerLabel" Content="90" HorizontalAlignment="Left" Margin="654,73,0,0" VerticalAlignment="Top" Height="47" Width="45" FontSize="24" FontWeight="Bold"/>
+                        <Label x:Name="LblTimer" Content="90" HorizontalAlignment="Left" Margin="654,73,0,0" VerticalAlignment="Top" Height="47" Width="45" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
 
 
                     </Grid>
