@@ -37,24 +37,24 @@ namespace FantasyDraft
             //Timer code
             DispatcherTimer dt = new DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1);
-            dt.Tick += dtTicker;
+            dt.Tick += Ticker;
             dt.Start();
         }
 
         // amount of seconds each person gets per pick
-        private int decrement = 90;
+        private int Decrement = 90;
 
         // decrements the count of the ticker
-        private void dtTicker(object sender, EventArgs e)
+        private void Ticker(object sender, EventArgs e)
         {
-            decrement--;
+            Decrement--;
 
             // test case if person didn't choose a player in time
-            if(decrement < 0)
+            if(Decrement < 0)
             {
-                decrement = 0;
+                Decrement = 0;
             }
-            LblTimer.Content = decrement.ToString();
+            LblTimer.Content = Decrement.ToString();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace FantasyDraft
         private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
         {
             // when a player clicks the draft button, timer count is reset
-            decrement = 91;  
+            Decrement = 91;  
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
