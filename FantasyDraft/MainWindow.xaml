@@ -4,70 +4,86 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FantasyDraft"
+        xmlns:converters="clr-namespace:FantasyDraft.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600"
         MinHeight="900" MinWidth="1600"
-        Loaded="MainWindow_Loaded">
+        Loaded="MainWindow_Loaded" Name="FantasyDraftWindow">
+
+    <Window.Resources>
+        <converters:DraftStateConverter x:Key="DraftStateConverter"/>
+    </Window.Resources>
+    
     <Grid>
         <TabControl>
             <TabItem Header="Fantasy Draft Big Board">
                 <AdornerDecorator>
                     <Grid>
-                        <DataGrid Margin="285,180,285,179" SelectionChanged="DataGrid_SelectionChanged">
-                            <DataGrid.CellStyle>
-                                <Style/>
-                            </DataGrid.CellStyle>
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Select" Width="45" CanUserSort="False">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
+                        <Grid x:Name="MidDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=1}">
+                            <DataGrid Margin="285,180,285,179" SelectionChanged="DataGrid_SelectionChanged">
+                                <DataGrid.CellStyle>
+                                    <Style/>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Select" Width="45" CanUserSort="False">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Rank" Width="45">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Rank" Width="45">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Player" Width="400">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Player" Width="400">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Position" Width="60">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Position" Width="60">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Team" Width="60">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Team" Width="60">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Bye Week" Width="65">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Bye Week" Width="65">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Button x:Name="BtnDraftPlayer" Content="Draft Player" HorizontalAlignment="Left" Margin="347,729,0,0" VerticalAlignment="Top" Height="38" Width="108" Click="BtnDraftPlayer_Click" />
-                        <Label x:Name="LblTeamSelecting" Content="Team Picking" HorizontalAlignment="Left" Margin="1359,53,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                        <Image HorizontalAlignment="Left" Height="75" Margin="1349,100,0,0" VerticalAlignment="Top" Width="100" Source="sea_otter.jpg" Stretch="Fill" StretchDirection="Both"/>
-                        <Label x:Name="LblTimer" Content="90" HorizontalAlignment="Center" Margin="0,91,0,0" VerticalAlignment="Top" Height="47" Width="46" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button x:Name="BtnDraftPlayer" Content="Draft Player" HorizontalAlignment="Left" Margin="347,729,0,0" VerticalAlignment="Top" Height="38" Width="108" Click="BtnDraftPlayer_Click" />
+                            <Label x:Name="LblTeamSelecting" Content="Team Picking" HorizontalAlignment="Left" Margin="1359,53,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <Image Name="ImgFantasyLogo" HorizontalAlignment="Left" Height="75" Margin="1349,100,0,0" VerticalAlignment="Top" Width="100" Source="sea_otter.jpg" Stretch="Fill" StretchDirection="Both"/>
+                            <Label x:Name="LblTimerSeconds" Content="Sec" HorizontalAlignment="Left" Margin="793,91,0,0" VerticalAlignment="Top" Height="47" Width="46" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
+                            <Button x:Name="BtnLoadLogo" Content="Load Team Logo" HorizontalAlignment="Left" Margin="1354,189,0,0" VerticalAlignment="Top" Width="94" Click="BtnLoadLogo_Click"/>
+                            <Label x:Name="LblTimerMinutes" Content="M" HorizontalAlignment="Left" Margin="755,91,0,0" VerticalAlignment="Top" Height="47" Width="38" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black" />
+                            <Label x:Name="LblTimerColon" Content=":" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Height="48" Width="24" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
 
-
+                        </Grid>
+                        <Grid x:Name="PreDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=0}">
+                            <Label Content="PreDraft"/>
+                        </Grid>
+                        <Grid x:Name="PostDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=2}">
+                            <Label Content="PostDraft"/>
+                        </Grid>
                     </Grid>
                 </AdornerDecorator>
             </TabItem>

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using HtmlAgilityPack;
 using System.Windows.Threading;
 using System.Threading;
+using System.IO;
 
 namespace FantasyDraft
 {
@@ -39,23 +40,68 @@ namespace FantasyDraft
             dt.Interval = TimeSpan.FromSeconds(1);
             dt.Tick += Ticker;
             dt.Start();
+            ConvertTimerToMinSecFormat();
+
+            DraftState = 0;
         }
 
+
+
         // amount of seconds each person gets per pick
-        private int Decrement = 90;
+        private int SelectionTime = 74;
+        private bool IsOutOfTimeToPick = false;
+        
+        // Property that keeps track of the status of the draft... Predraft, Middraft, or Post-Draft
+        // Pre-Draft = 0 | Mid-Draft = 1 | Post-Draft = 2
+        public int DraftState { get; set; }
+
+
+
+
 
         // decrements the count of the ticker
         private void Ticker(object sender, EventArgs e)
         {
-            Decrement--;
+            SelectionTime--;
 
             // test case if person didn't choose a player in time
-            if(Decrement < 0)
+            if(SelectionTime < 0)
             {
-                Decrement = 0;
+                SelectionTime = 0;
+                IsOutOfTimeToPick = true;
             }
-            LblTimer.Content = Decrement.ToString();
+            ConvertTimerToMinSecFormat();
         }
+
+
+        /// <summary>
+        /// This gets called so we can change seconds to a Min:Sec format
+        /// Ex: 90 sec -> 1:30
+        /// </summary>
+        private void ConvertTimerToMinSecFormat()
+        {
+            // Mod 60 gets seconds
+            int rawSeconds = SelectionTime % 60;
+            // Div function gets minutes
+            int minutes = SelectionTime / 60;
+            string seconds = "";
+
+            //If there is 0 - 9 seconds..
+            if (rawSeconds < 10)
+            {
+                //Add a '0' to the front of seconds... to get 1:09 instead of 1:9
+                seconds = "0" + rawSeconds.ToString();
+            }
+            else
+            {
+                seconds = rawSeconds.ToString();
+            }
+
+            this.LblTimerMinutes.Content = minutes;
+            this.LblTimerSeconds.Content = seconds;
+        }
+
+
 
         /// <summary>
         /// Scrape the fantasy website for football player ranks/info... should be in another class?
@@ -82,15 +128,61 @@ namespace FantasyDraft
             }
         }
 
+
+        private static BitmapImage LoadImage(byte[] imageData)
+        {
+            if (imageData == null || imageData.Length == 0) return null;
+            var image = new BitmapImage();
+            using (var mem = new MemoryStream(imageData))
+            {
+                mem.Position = 0;
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.StreamSource = mem;
+                image.EndInit();
+            }
+            image.Freeze();
+            return image;
+        }
+
+
+        
+
+
+
         private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
         {
             // when a player clicks the draft button, timer count is reset
-            Decrement = 91;  
+            SelectionTime = 91;  
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void BtnLoadLogo_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg";
+
+            string lclogopath = "";
+            //lclogopath = Setting.GetSettingPath("LOGO_PATH") + "PNG";                                      Setting does not exist...
+            dlg.InitialDirectory = lclogopath;
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                byte[] img = null;
+                FileStream fs = new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+                img = br.ReadBytes((int)fs.Length);
+                //FantasyTeamDBRecord.TeamLogo = img;  <-- puts img into TeamLogo SQL field in FantasyTeam database
+                //Data.Context.SaveChanges();    <-- saves changes... we may need to do this another way
+                //ImgFantasyLogo.Source = LoadImage(/*FantasyTeamDBRecord.TeamLogo*/);
+            }
         }
     }
 }
