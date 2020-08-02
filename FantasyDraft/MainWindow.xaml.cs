@@ -27,10 +27,13 @@ namespace FantasyDraft
         public MainWindow()
         {
             InitializeComponent();
+
+            DraftState = 1;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+
             //Scrape web for latest player data?
             // if FootballPlayer table SQL records == null, then webscrape... if not, don't?
             WebScrape();
@@ -41,19 +44,29 @@ namespace FantasyDraft
             dt.Tick += Ticker;
             dt.Start();
             ConvertTimerToMinSecFormat();
-
-            DraftState = 0;
         }
 
 
 
         // amount of seconds each person gets per pick
-        private int SelectionTime = 74;
+        private int SelectionTime = 90;
+        // Boolean that determines if the timer has hit 0 or not
         private bool IsOutOfTimeToPick = false;
         
+
         // Property that keeps track of the status of the draft... Predraft, Middraft, or Post-Draft
-        // Pre-Draft = 0 | Mid-Draft = 1 | Post-Draft = 2
-        public int DraftState { get; set; }
+        // Pre-Draft = 0 | Mid-Draft = 1 | Post-Draft = 2... To change for testing purposes, change the "PropertyMetaData(#)" number below to whatever state you want
+        public int DraftState
+        {
+            get { return (int)GetValue(DraftStatesProperty); }
+            set { SetValue(DraftStatesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DraftState.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DraftStatesProperty =
+            DependencyProperty.Register("DraftState", typeof(int), typeof(MainWindow), new PropertyMetadata(1));
+
+
 
 
 
