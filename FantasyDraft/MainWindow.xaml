@@ -13,7 +13,7 @@
     <Window.Resources>
         <converters:DraftStateConverter x:Key="DraftStateConverter"/>
     </Window.Resources>
-    
+
     <Grid>
         <TabControl>
             <TabItem Header="Fantasy Draft Big Board">
@@ -87,17 +87,116 @@
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
-            <TabItem Header="Draft History">
+            <TabItem Header="Pre-Draft">
                 <AdornerDecorator>
                     <Grid>
+                        <Label Content="Scheduled Start Date:" HorizontalAlignment="Left" Margin="448,254,0,0" VerticalAlignment="Top"/>
+                        <TextBox Name="TxtStartDate_Pre" HorizontalAlignment="Left" Margin="578,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Scheduled Start Time:" HorizontalAlignment="Left" Margin="448,285,0,0" VerticalAlignment="Top"/>
+                        <TextBox Name="TxtStartTime_Pre" HorizontalAlignment="Left" Margin="578,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Draft Countdown:" HorizontalAlignment="Left" Margin="859,254,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtDraftCountdown" HorizontalAlignment="Left" Margin="989,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
+                        <TextBox x:Name="TxtDraftOrder" Margin="300,410,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalScrollBarVisibility="Auto" Height="18" HorizontalAlignment="Left" Width="994"/>
+                        <Label Content="Draft Order:" HorizontalAlignment="Left" Margin="222,406,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Number Of:" HorizontalAlignment="Left" Margin="368,500,0,0" VerticalAlignment="Top"/>
+                        <Label Content="QBs" HorizontalAlignment="Left" Margin="481,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfQB_Pre" HorizontalAlignment="Left" Margin="473,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" IsEnabled="False"/>
+                        <Label Content="RBs" HorizontalAlignment="Left" Margin="578,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfRB_Pre" HorizontalAlignment="Left" Margin="570,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" IsEnabled="False"/>
+                        <Label Content="WRs" HorizontalAlignment="Left" Margin="677,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfWR_Pre" HorizontalAlignment="Left" Margin="671,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" IsEnabled="False"/>
+                        <Label Content="TEs" HorizontalAlignment="Center" Margin="0,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfTE_Pre" HorizontalAlignment="Center" Margin="0,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" IsEnabled="False"/>
+                        <Label Content="Flex" HorizontalAlignment="Left" Margin="884,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfFlex_Pre" HorizontalAlignment="Left" Margin="876,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" IsEnabled="False"/>
+                        <Label Content="Ks" HorizontalAlignment="Left" Margin="984,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfK_Pre" HorizontalAlignment="Left" Margin="972,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" IsEnabled="False"/>
+                        <Label Content="DEFs" HorizontalAlignment="Left" Margin="1068,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfDef_Pre" HorizontalAlignment="Left" Margin="1063,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" IsEnabled="False"/>
+
+                    </Grid>
+                </AdornerDecorator>
+            </TabItem>
+            <TabItem Header="Post-Draft">
+                <AdornerDecorator>
+                    <Grid>
+                        <DataGrid Margin="195,144,195,265">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Round">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
             <TabItem Header="Settings">
                 <AdornerDecorator>
                     <Grid>
+                        <Label Content="Draft Name:" HorizontalAlignment="Left" Margin="140,107,0,0" VerticalAlignment="Top"/>
+                        <TextBox Name="TxtDraftName" HorizontalAlignment="Left" Margin="269,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
+                        <Label Content="Scheduled Start Date:" HorizontalAlignment="Left" Margin="139,135,0,0" VerticalAlignment="Top"/>
+                        <TextBox Name="TxtStartDate" HorizontalAlignment="Left" Margin="269,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Scheduled Start Time:" HorizontalAlignment="Left" Margin="139,166,0,0" VerticalAlignment="Top"/>
+                        <TextBox Name="TxtStartTime" HorizontalAlignment="Left" Margin="269,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
+                        <Label Content="Number of Fantasy Teams:" HorizontalAlignment="Left" Margin="682,193,0,0" VerticalAlignment="Top"/>
+                        <TextBox Name="TxtNumOfTeams" HorizontalAlignment="Left" Margin="834,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48"/>
+
+                        <Label Content="Fantasy Team Name" HorizontalAlignment="Left" Margin="34,273,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Owner Name" HorizontalAlignment="Left" Margin="52,304,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Team 1" HorizontalAlignment="Left" Margin="231,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam1_Name" HorizontalAlignment="Left" Margin="177,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="TxtTeam1_Owner" HorizontalAlignment="Left" Margin="177,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <Label Content="Team 2" HorizontalAlignment="Left" Margin="393,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam2_Name" HorizontalAlignment="Left" Margin="337,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="TxtTeam2_Owner" HorizontalAlignment="Left" Margin="337,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <Label Content="Team 3" HorizontalAlignment="Left" Margin="551,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam3_Name" HorizontalAlignment="Left" Margin="497,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="TxtTeam3_Owner" HorizontalAlignment="Left" Margin="497,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <Label Content="Team 4" HorizontalAlignment="Left" Margin="711,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam4_Name" HorizontalAlignment="Left" Margin="657,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="TxtTeam4_Owner" HorizontalAlignment="Left" Margin="657,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <Label Content="Team 5" HorizontalAlignment="Left" Margin="871,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam5_Name" HorizontalAlignment="Left" Margin="817,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="TxtTeam5_Owner" HorizontalAlignment="Left" Margin="817,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <Label Content="Team 6" HorizontalAlignment="Left" Margin="1031,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam6_Name" HorizontalAlignment="Left" Margin="977,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="TxtTeam6_Owner" HorizontalAlignment="Left" Margin="977,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+                        <Label Content="Team 7" HorizontalAlignment="Left" Margin="1191,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam7_Name" HorizontalAlignment="Left" Margin="1137,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+                        <TextBox x:Name="TxtTeam7_Owner" HorizontalAlignment="Left" Margin="1137,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+                        <Label Content="Team 8" HorizontalAlignment="Left" Margin="1352,246,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtTeam8_Name" HorizontalAlignment="Left" Margin="1298,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+                        <TextBox x:Name="TxtTeam8_Owner" HorizontalAlignment="Left" Margin="1298,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+
+                        <Label Content="Number Of:" HorizontalAlignment="Left" Margin="368,500,0,0" VerticalAlignment="Top"/>
+                        <Label Content="QBs" HorizontalAlignment="Left" Margin="481,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfQB" HorizontalAlignment="Left" Margin="473,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+                        <Label Content="RBs" HorizontalAlignment="Left" Margin="578,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfRB" HorizontalAlignment="Left" Margin="570,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+                        <Label Content="WRs" HorizontalAlignment="Left" Margin="677,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfWR" HorizontalAlignment="Left" Margin="671,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+                        <Label Content="TEs" HorizontalAlignment="Center" Margin="0,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfTE" HorizontalAlignment="Center" Margin="0,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
+                        <Label Content="Flex" HorizontalAlignment="Left" Margin="884,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfFlex" HorizontalAlignment="Left" Margin="876,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
+                        <Label Content="Ks" HorizontalAlignment="Left" Margin="984,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfK" HorizontalAlignment="Left" Margin="972,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
+                        <Label Content="DEFs" HorizontalAlignment="Left" Margin="1068,476,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfDef" HorizontalAlignment="Left" Margin="1063,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
