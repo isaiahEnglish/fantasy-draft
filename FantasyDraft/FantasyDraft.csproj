@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\FantasyPros_2020_Draft_Overall_Rankings.csv" />
     <None Remove="sea_otter.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\FantasyPros_2020_Draft_Overall_Rankings.csv" />
   </ItemGroup>
 
   <ItemGroup>

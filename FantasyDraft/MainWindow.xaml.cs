@@ -44,6 +44,12 @@ namespace FantasyDraft
             dt.Tick += Ticker;
             dt.Start();
             ConvertTimerToMinSecFormat();
+
+            //Load football player data from CSV
+            LoadData();
+
+            Console.WriteLine(System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory));
+
         }
 
 
@@ -196,6 +202,22 @@ namespace FantasyDraft
                 //Data.Context.SaveChanges();    <-- saves changes... we may need to do this another way
                 //ImgFantasyLogo.Source = LoadImage(/*FantasyTeamDBRecord.TeamLogo*/);
             }
+        }
+
+        private void LoadData()
+        {
+            // NOTE: Changed data csv file to Embedded Resource... Was initially NONE for build action, may have to change it back if issues arise
+
+            //Get the project file path
+            string filePath = System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            //Step back the file path to the root FantasyDraft folder
+            filePath = Directory.GetParent(Directory.GetParent(Directory.GetParent(filePath).FullName).FullName).FullName;
+            //Add on the "\Data" subfolder and then the "\[name].csv" CSV file
+            filePath += "\\Data\\FantasyPros_2020_Draft_Overall_Rankings.csv";
+
+            //Load the data into temp for now... should be made into 2D array later?
+            List<string> temp = Data.LoadCSVFile(filePath);
+
         }
     }
 }
