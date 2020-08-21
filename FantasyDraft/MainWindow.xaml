@@ -20,7 +20,7 @@
                 <AdornerDecorator>
                     <Grid>
                         <Grid x:Name="MidDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=1}">
-                            <DataGrid Margin="285,180,285,179" SelectionChanged="DataGrid_SelectionChanged">
+                            <DataGrid Name="GrdBigBoard" Margin="285,180,285,179" SelectionChanged="GrdBigBoard_SelectionChanged">
                                 <DataGrid.CellStyle>
                                     <Style/>
                                 </DataGrid.CellStyle>
@@ -77,12 +77,30 @@
                             <Label x:Name="LblTimerMinutes" Content="M" HorizontalAlignment="Left" Margin="755,91,0,0" VerticalAlignment="Top" Height="47" Width="38" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black" />
                             <Label x:Name="LblTimerColon" Content=":" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Height="48" Width="24" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
 
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Canvas ClipToBounds="True" Name="canMain" Background="Transparent" Margin="0,780,0,28">
+                                    <Grid Width="{Binding ElementName=canMain, Path=ActualWidth}" >
+                                        <Grid.ColumnDefinitions>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="2,10,0,0">
+                                            <TextBox ClipToBounds="True" Name="TextBoxMarquee" Text="lars er en god skakspiller, der tænker længere end de andre" BorderBrush="Transparent"/>
+                                        </Border>
+                                    </Grid>
+                                </Canvas>
+                            </Grid>
                         </Grid>
                         <Grid x:Name="PreDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=0}">
-                            <Label Content="PreDraft"/>
+                            
                         </Grid>
                         <Grid x:Name="PostDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=2}">
-                            <Label Content="PostDraft"/>
+                            
                         </Grid>
                     </Grid>
                 </AdornerDecorator>

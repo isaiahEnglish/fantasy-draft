@@ -16,6 +16,7 @@ using HtmlAgilityPack;
 using System.Windows.Threading;
 using System.Threading;
 using System.IO;
+using System.Windows.Media.Animation;
 
 namespace FantasyDraft
 {
@@ -48,7 +49,7 @@ namespace FantasyDraft
             //Load football player data from CSV
             LoadData();
 
-            Console.WriteLine(System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory));
+            LeftToRightMarqueeText();
 
         }
 
@@ -167,21 +168,6 @@ namespace FantasyDraft
         }
 
 
-        
-
-
-
-        private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
-        {
-            // when a player clicks the draft button, timer count is reset
-            SelectionTime = 91;  
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void BtnLoadLogo_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -217,6 +203,50 @@ namespace FantasyDraft
 
             //Load the data into temp for now... should be made into 2D array later?
             List<string> temp = Data.LoadCSVFile(filePath);
+
+        }
+
+        /// <summary>
+        /// Creates the ticker that shows the draft picks
+        /// </summary>
+        void LeftToRightMarqueeText()
+        {
+            string Copy = " " + TextBoxMarquee.Text;
+            double TextGraphicalWidth = new FormattedText(Copy, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, new Typeface(TextBoxMarquee.FontFamily.Source), TextBoxMarquee.FontSize, TextBoxMarquee.Foreground).WidthIncludingTrailingWhitespace;
+            double TextLenghtGraphicalWidth = 0;
+            //BorderTextBoxMarquee.Width = TextGraphicalWidth + 5;
+            while (TextLenghtGraphicalWidth < TextBoxMarquee.ActualWidth)
+            {
+                TextBoxMarquee.Text += Copy;
+                TextLenghtGraphicalWidth = new FormattedText(TextBoxMarquee.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, new Typeface(TextBoxMarquee.FontFamily.Source), TextBoxMarquee.FontSize, TextBoxMarquee.Foreground).WidthIncludingTrailingWhitespace;
+            }
+            TextBoxMarquee.Text += " " + TextBoxMarquee.Text;
+            ThicknessAnimation ThickAnimation = new ThicknessAnimation();
+            ThickAnimation.From = new Thickness(0, 0, 0, 0);
+            ThickAnimation.To = new Thickness(-TextGraphicalWidth, 0, 0, 0);
+            ThickAnimation.RepeatBehavior = RepeatBehavior.Forever;
+            ThickAnimation.Duration = new Duration(TimeSpan.FromSeconds(2.5)); //Speed of ticker -> Less seconds, faster ticker | More seconds, slower animation
+            TextBoxMarquee.BeginAnimation(TextBox.PaddingProperty, ThickAnimation);
+        }
+
+        private void SelectPlayer(object selectedPlayer)
+        {
+            //Find the player in the list of players
+            //Add them to team's roster
+            //Remove player from list of players
+            //Add player to list of already selected players?
+        }
+
+        private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            // when a player clicks the draft button, timer count is reset
+            SelectionTime = 91;
+
+            SelectPlayer(GrdBigBoard.SelectedItem);
+        }
+
+        private void GrdBigBoard_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
     }
