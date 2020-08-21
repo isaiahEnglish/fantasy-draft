@@ -34,6 +34,7 @@ namespace FantasyDraft
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            SetDataPath();
 
             //Scrape web for latest player data?
             // if FootballPlayer table SQL records == null, then webscrape... if not, don't?
@@ -59,7 +60,9 @@ namespace FantasyDraft
         private int SelectionTime = 90;
         // Boolean that determines if the timer has hit 0 or not
         private bool IsOutOfTimeToPick = false;
-        
+
+        public string DataPath { get; set; }
+
 
         // Property that keeps track of the status of the draft... Predraft, Middraft, or Post-Draft
         // Pre-Draft = 0 | Mid-Draft = 1 | Post-Draft = 2... To change for testing purposes, change the "PropertyMetaData(#)" number below to whatever state you want
@@ -190,16 +193,26 @@ namespace FantasyDraft
             }
         }
 
+        private void SetDataPath()
+        {
+            //Get the project file path
+            string filePath = System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            //Step back the file path to the root FantasyDraft folder
+            filePath = Directory.GetParent(Directory.GetParent(Directory.GetParent(filePath).FullName).FullName).FullName;
+            //Add on the \Data subfolder
+            filePath += "\\Data";
+
+            DataPath = filePath;
+        }
+
         private void LoadData()
         {
             // NOTE: Changed data csv file to Embedded Resource... Was initially NONE for build action, may have to change it back if issues arise
 
             //Get the project file path
-            string filePath = System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-            //Step back the file path to the root FantasyDraft folder
-            filePath = Directory.GetParent(Directory.GetParent(Directory.GetParent(filePath).FullName).FullName).FullName;
-            //Add on the "\Data" subfolder and then the "\[name].csv" CSV file
-            filePath += "\\Data\\FantasyPros_2020_Draft_Overall_Rankings.csv";
+            string filePath = DataPath;
+            //Add on the "\[name].csv" CSV file
+            filePath += "\\FantasyPros_2020_Draft_Overall_Rankings.csv";
 
             //Load the data into temp for now... should be made into 2D array later?
             List<string> temp = Data.LoadCSVFile(filePath);
@@ -231,10 +244,43 @@ namespace FantasyDraft
 
         private void SelectPlayer(object selectedPlayer)
         {
+            //Create the file name/path for the draft results to be stored into
+            string month, day, year;
+            month = PutAZeroOnIt(DateTime.Now.Month);
+            day = PutAZeroOnIt(DateTime.Now.Day);
+            year = DateTime.Now.Year.ToString().Substring(2,2); //ALL THIS STUFF SHOULD BE MOVED ELSEWHERE AND CALLED ONCE... otherwise, issues if draft goes past midnight into next day
+            string fileName = month + day + year + "_.txt"; //Add on Draft Name after _ later
+            string filePath = DataPath + "\\DraftResults\\" + fileName;
+
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    File.Create(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+
             //Find the player in the list of players
-            //Add them to team's roster
+            //Add them to team's roster... stored in txt file created above?
             //Remove player from list of players
             //Add player to list of already selected players?
+        }
+
+        private string PutAZeroOnIt(int value)
+        {
+            string returnVal = value.ToString();
+
+            if (value < 10)
+            {
+                returnVal = "0" + value.ToString();
+            }
+
+            return returnVal;
         }
 
         private void BtnDraftPlayer_Click(object sender, RoutedEventArgs e)
