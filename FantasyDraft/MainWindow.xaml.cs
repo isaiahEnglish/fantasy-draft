@@ -79,6 +79,35 @@ namespace FantasyDraft
 
 
 
+        public List<string> ListOfRawPlayers
+        {
+            get { return (List<string>)GetValue(ListOfPlayersProperty); }
+            set { SetValue(ListOfPlayersProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ListOfPlayers.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ListOfPlayersProperty =
+            DependencyProperty.Register("ListOfPlayers", typeof(List<string>), typeof(MainWindow));
+
+
+
+
+        public List<FootballPlayer> ListOfFootballPlayers
+        {
+            get { return (List<FootballPlayer>)GetValue(ListOfFootballPlayersProperty); }
+            set { SetValue(ListOfFootballPlayersProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ListOfFootballPlayers.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ListOfFootballPlayersProperty =
+            DependencyProperty.Register("ListOfFootballPlayers", typeof(List<FootballPlayer>), typeof(MainWindow));
+
+
+
+
+
+
+
 
 
 
@@ -215,9 +244,26 @@ namespace FantasyDraft
             filePath += "\\FantasyPros_2020_Draft_Overall_Rankings.csv";
 
             //Load the data into temp for now... should be made into 2D array later?
-            List<string> temp = Data.LoadCSVFile(filePath);
-
+            ListOfRawPlayers = Data.LoadCSVFile(filePath);
+            ParseData(ListOfRawPlayers);
         }
+
+
+        private void ParseData(List<string> playersRow)
+        {
+            foreach (var row in playersRow)
+            {
+                //ignore first row...
+
+                string[] tokenizedInfo = row.Split(',');
+
+                //should clean data here? take out " and \
+
+                FootballPlayer newPlayer = new FootballPlayer() { Rank = tokenizedInfo[0], Name = tokenizedInfo[3], Team = tokenizedInfo[4], Position = tokenizedInfo[5], Bye = tokenizedInfo[6] };
+                ListOfFootballPlayers.Add(newPlayer);
+            }
+        }
+
 
         /// <summary>
         /// Creates the ticker that shows the draft picks
