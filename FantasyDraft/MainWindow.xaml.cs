@@ -35,6 +35,7 @@ namespace FantasyDraft
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ListOfFootballPlayers = new List<FootballPlayer>();
+            FantasyDraftRecord = new FantasyDraftSettings();
 
             SetDataPath();
 
@@ -49,8 +50,13 @@ namespace FantasyDraft
             dt.Start();
             ConvertTimerToMinSecFormat();
 
+
+            //Load previous drafts into list of drafts
+            CboLoadedDrafts.ItemsSource = LoadPreviousDraftList();
+
+
             //Load football player data from CSV
-            LoadData();
+            LoadPlayerData();
             GrdBigBoard.ItemsSource = ListOfFootballPlayers;
 
             LeftToRightMarqueeText();
@@ -106,6 +112,20 @@ namespace FantasyDraft
         // Using a DependencyProperty as the backing store for ListOfFootballPlayers.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ListOfFootballPlayersProperty =
             DependencyProperty.Register("ListOfFootballPlayers", typeof(List<FootballPlayer>), typeof(MainWindow));
+
+
+
+
+        public FantasyDraftSettings FantasyDraftRecord
+        {
+            get { return (FantasyDraftSettings)GetValue(FantasyDraftRecordProperty); }
+            set { SetValue(FantasyDraftRecordProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FantasyDraftRecord.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FantasyDraftRecordProperty =
+            DependencyProperty.Register("FantasyDraftRecord", typeof(FantasyDraftSettings), typeof(MainWindow));
+
 
 
 
@@ -244,10 +264,28 @@ namespace FantasyDraft
         }
 
 
+        private List<string> LoadPreviousDraftList()
+        {
+            string[] draftsRaw = System.IO.File.ReadAllLines(DataPath + "\\FantasyDrafts\\FantasyDrafts.txt");
+            string[] drafts;
+            List<string> fantasyDraftNamesList = new List<string>();
+            fantasyDraftNamesList.Add("");
+
+            foreach (var draft in draftsRaw)
+            {
+                drafts = draft.Split(',');
+                fantasyDraftNamesList.Add(drafts[0]);
+            }
+
+            return fantasyDraftNamesList;
+        }
+
+
+
         /// <summary>
         /// Loads the data from stored CSV
         /// </summary>
-        private void LoadData()
+        private void LoadPlayerData()
         {
             // NOTE: Changed data csv file to Embedded Resource... Was initially NONE for build action, may have to change it back if issues arise
 
@@ -341,14 +379,95 @@ namespace FantasyDraft
         }
 
 
-        private void CreateDraftResultFile()
+
+        /// <summary>
+        /// Insert new draft settings into FantasyDrafts text file
+        /// </summary>
+        private void InsertNewDraft()
         {
-            //Create the file name/path for the draft results to be stored into
+            FileStream fileStream = new FileStream(DataPath + "\\FantasyDrafts\\FantasyDrafts.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter fileWriter = new StreamWriter(fileStream);
+
+            string newLine = FantasyDraftRecord.Name + "," + FantasyDraftRecord.StartDate + "," + FantasyDraftRecord.StartTime + "," + FantasyDraftRecord.NumOfTeams + "," +
+                FantasyDraftRecord.NumOfQB + "," + FantasyDraftRecord.NumOfRB + "," + FantasyDraftRecord.NumOfWR + "," + FantasyDraftRecord.NumOfTE + "," + FantasyDraftRecord.NumOfFlex + "," +
+                FantasyDraftRecord.NumOfK + "," + FantasyDraftRecord.NumOfDEF;
+
+            fileWriter.WriteLine(newLine);
+            fileWriter.Flush();
+            fileWriter.Close();
+        }
+
+
+        /// <summary>
+        /// Make sure all draft information is entered properly before saving
+        /// </summary>
+        private bool ValidateNewDraft()
+        {
+            bool save = true;
+
+            if (string.IsNullOrEmpty(FantasyDraftRecord.Name))
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.StartDate == null)
+            {
+                //More validation
+                save = false;
+            }
+            if (FantasyDraftRecord.StartTime == null)
+            {
+                //More validation
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfTeams == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfQB == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfRB == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfWR == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfTE == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfFlex == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfK == 0)
+            {
+                save = false;
+            }
+            if (FantasyDraftRecord.NumOfDEF == 0)
+            {
+                save = false;
+            }
+
+            return save;
+        }
+
+
+
+        /// <summary>
+        /// Create the file that holds the Draft Selection Results
+        /// </summary>
+        private void CreateDraftResultsTxtFile()
+        {
+            //Create the file name/path for the DRAFT RESULTS to be stored into
             string month, day, year;
             month = PutAZeroOnIt(DateTime.Now.Month);
             day = PutAZeroOnIt(DateTime.Now.Day);
             year = DateTime.Now.Year.ToString().Substring(2, 2); //ALL THIS STUFF SHOULD BE MOVED ELSEWHERE AND CALLED ONCE... otherwise, issues if draft goes past midnight into next day
-            string fileName = month + day + year + "_.txt"; //Add on Draft Name after _ later
+            string fileName = month + day + year + "_" + FantasyDraftRecord.Name + ".txt";
             string filePath = DataPath + "\\DraftResults\\" + fileName;
 
             try
@@ -363,8 +482,6 @@ namespace FantasyDraft
             {
                 MessageBox.Show(ex.ToString());
             }
-
-            
         }
 
 
@@ -390,7 +507,43 @@ namespace FantasyDraft
 
         private void BtnCreateNewDraft_Click(object sender, RoutedEventArgs e)
         {
-            CreateDraftResultFile();
+            //Clear settings textboxes, make a new FantasyDraftSettings instance and assign to FantasyDraftRecord
+        }
+
+        private void BtnSaveNewDraft_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidateNewDraft())
+            {
+                InsertNewDraft();
+            }
+        }
+
+        private void BtnLoadDraft_Click(object sender, RoutedEventArgs e)
+        {
+            string[] draftsRaw = System.IO.File.ReadAllLines(DataPath + "\\FantasyDrafts\\FantasyDrafts.txt");
+            string[] drafts;
+
+            foreach (var draft in draftsRaw)
+            {
+                drafts = draft.Split(',');
+                if (drafts[0] == CboLoadedDrafts.SelectedItem.ToString())
+                {
+                    FantasyDraftRecord = new FantasyDraftSettings()
+                    {
+                        Name = drafts[0],
+                        StartDate = DateTime.Parse(drafts[1]),
+                        StartTime = DateTime.Parse(drafts[2]),
+                        NumOfTeams = int.Parse(drafts[3]),
+                        NumOfQB = int.Parse(drafts[4]),
+                        NumOfRB = int.Parse(drafts[5]),
+                        NumOfWR = int.Parse(drafts[6]),
+                        NumOfTE = int.Parse(drafts[7]),
+                        NumOfFlex = int.Parse(drafts[8]),
+                        NumOfK = int.Parse(drafts[9]),
+                        NumOfDEF = int.Parse(drafts[10])
+                    };
+                }
+            }
         }
     }
 }
