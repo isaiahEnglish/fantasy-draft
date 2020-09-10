@@ -10,7 +10,7 @@ namespace FantasyDraft
         public string Position { get; set; }
         public string Name { get; set; }
         public string Team { get; set; }
-        public string Bye { get; set; }
+        public int Bye { get; set; }
 
         public FootballPlayer()
         {

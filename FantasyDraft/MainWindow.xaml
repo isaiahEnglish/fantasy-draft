@@ -20,7 +20,7 @@
                 <AdornerDecorator>
                     <Grid>
                         <Grid x:Name="MidDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=1}">
-                            <DataGrid Name="GrdBigBoard" Margin="285,180,285,179" SelectionChanged="GrdBigBoard_SelectionChanged">
+                            <DataGrid Name="GrdBigBoard" Margin="285,180,285,179" >
                                 <DataGrid.CellStyle>
                                     <Style/>
                                 </DataGrid.CellStyle>
@@ -35,35 +35,35 @@
                                     <DataGridTemplateColumn Header="Rank" Width="45">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-
+                                                <TextBlock Text="{Binding Path=Rank}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn Header="Player" Width="400">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-
+                                                <TextBlock Text="{Binding Path=Name}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn Header="Position" Width="60">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-
+                                                <TextBlock Text="{Binding Path=Position}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn Header="Team" Width="60">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-
+                                                <TextBlock Text="{Binding Path=Team}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn Header="Bye Week" Width="65">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-
+                                                <TextBlock Text="{Binding Path=Bye}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -77,11 +77,11 @@
                             <Label x:Name="LblTimerMinutes" Content="M" HorizontalAlignment="Left" Margin="755,91,0,0" VerticalAlignment="Top" Height="47" Width="38" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black" />
                             <Label x:Name="LblTimerColon" Content=":" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Height="48" Width="24" FontSize="24" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
 
-                            <Grid>
+                            <Grid Margin="0,801,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Canvas ClipToBounds="True" Name="canMain" Background="Transparent" Margin="0,780,0,28">
+                                <Canvas ClipToBounds="True" Name="canMain" Background="Transparent" Margin="0,0,0,28">
                                     <Grid Width="{Binding ElementName=canMain, Path=ActualWidth}" >
                                         <Grid.ColumnDefinitions>
                                         </Grid.ColumnDefinitions>
@@ -96,12 +96,12 @@
                                 </Canvas>
                             </Grid>
                         </Grid>
-                        <Grid x:Name="PreDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=0}">
+                        <!--<Grid x:Name="PreDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=0}">
                             
                         </Grid>
                         <Grid x:Name="PostDraft" Visibility="{Binding ElementName=FantasyDraftWindow, Path=DraftState, Converter={StaticResource DraftStateConverter}, ConverterParameter=2}">
                             
-                        </Grid>
+                        </Grid>-->
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
@@ -215,6 +215,7 @@
                         <TextBox x:Name="TxtNumOfK" HorizontalAlignment="Left" Margin="972,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
                         <Label Content="DEFs" HorizontalAlignment="Left" Margin="1068,476,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="TxtNumOfDef" HorizontalAlignment="Left" Margin="1063,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
+                        <Button x:Name="BtnCreateNewDraft" Content="Create New Fantasy Draft" HorizontalAlignment="Left" Margin="735,663,0,0" VerticalAlignment="Top" Click="BtnCreateNewDraft_Click"/>
                     </Grid>
                 </AdornerDecorator>
             </TabItem>

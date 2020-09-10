@@ -34,6 +34,8 @@ namespace FantasyDraft
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            ListOfFootballPlayers = new List<FootballPlayer>();
+
             SetDataPath();
 
             //Scrape web for latest player data?
@@ -49,6 +51,7 @@ namespace FantasyDraft
 
             //Load football player data from CSV
             LoadData();
+            GrdBigBoard.ItemsSource = ListOfFootballPlayers;
 
             LeftToRightMarqueeText();
 
@@ -62,6 +65,8 @@ namespace FantasyDraft
         private bool IsOutOfTimeToPick = false;
 
         public string DataPath { get; set; }
+
+        public string DraftResultFile { get; set; }
 
 
         // Property that keeps track of the status of the draft... Predraft, Middraft, or Post-Draft
@@ -78,7 +83,7 @@ namespace FantasyDraft
 
 
 
-
+        //Rows of raw data, not parsed or split up
         public List<string> ListOfRawPlayers
         {
             get { return (List<string>)GetValue(ListOfPlayersProperty); }
@@ -91,7 +96,7 @@ namespace FantasyDraft
 
 
 
-
+        //Final, parsed and cleaned up list of players
         public List<FootballPlayer> ListOfFootballPlayers
         {
             get { return (List<FootballPlayer>)GetValue(ListOfFootballPlayersProperty); }
@@ -222,6 +227,10 @@ namespace FantasyDraft
             }
         }
 
+
+        /// <summary>
+        /// Sets the DataPath property to be the Data folder in the project parent folder
+        /// </summary>
         private void SetDataPath()
         {
             //Get the project file path
@@ -234,6 +243,10 @@ namespace FantasyDraft
             DataPath = filePath;
         }
 
+
+        /// <summary>
+        /// Loads the data from stored CSV
+        /// </summary>
         private void LoadData()
         {
             // NOTE: Changed data csv file to Embedded Resource... Was initially NONE for build action, may have to change it back if issues arise
@@ -243,24 +256,48 @@ namespace FantasyDraft
             //Add on the "\[name].csv" CSV file
             filePath += "\\FantasyPros_2020_Draft_Overall_Rankings.csv";
 
-            //Load the data into temp for now... should be made into 2D array later?
             ListOfRawPlayers = Data.LoadCSVFile(filePath);
-            ParseData(ListOfRawPlayers);
+            ParseDataAndBuildPlayerList(ListOfRawPlayers);
         }
 
-
-        private void ParseData(List<string> playersRow)
+        /// <summary>
+        /// Splits data into important pieces of information, parses and cleans data, creates a new instance of FootballPlayer and inserts into list
+        /// </summary>
+        /// <param name="playersRow"></param>
+        private void ParseDataAndBuildPlayerList(List<string> playersRow)
         {
+            int i = 0; //row counter, AKA player counter
             foreach (var row in playersRow)
             {
-                //ignore first row...
+                //Ignore first header row and last two blank rows
+                if (i == 0 || i >= 504)
+                {
+                    i++;
+                    continue;
+                }
 
                 string[] tokenizedInfo = row.Split(',');
 
-                //should clean data here? take out " and \
+                //Clean data
+                string rank = tokenizedInfo[0].Trim('"');
+                string name = tokenizedInfo[3].Trim('"');
+                string team = tokenizedInfo[4].Trim('"');
+                string position = tokenizedInfo[5].Trim('"');
+                int bye;
+                if (team.Equals("FA")) //if the football player is a free agent
+                {
+                    bye = 0; //default bye week to week 0
+                }
+                else
+                {
+                    bye = int.Parse(tokenizedInfo[6].Trim('"'));
+                }
+                
 
-                FootballPlayer newPlayer = new FootballPlayer() { Rank = tokenizedInfo[0], Name = tokenizedInfo[3], Team = tokenizedInfo[4], Position = tokenizedInfo[5], Bye = tokenizedInfo[6] };
+                FootballPlayer newPlayer = new FootballPlayer() { Rank = rank, Name = name, Team = team, Position = position, Bye = bye };
                 ListOfFootballPlayers.Add(newPlayer);
+
+                i++;
             }
         }
 
@@ -290,11 +327,27 @@ namespace FantasyDraft
 
         private void SelectPlayer(object selectedPlayer)
         {
+            //Find the player in the list of players
+            //Add them to team's roster... stored in txt file?
+            //Remove player from list of players
+            //Add player to list of already selected players?
+            FootballPlayer player = (FootballPlayer)selectedPlayer;
+
+            FileStream fileStream = new FileStream(DraftResultFile, FileMode.Append, FileAccess.Write);
+            StreamWriter fileWriter = new StreamWriter(fileStream);
+            fileWriter.Write(player.Name);
+            fileWriter.Flush();
+            fileWriter.Close();
+        }
+
+
+        private void CreateDraftResultFile()
+        {
             //Create the file name/path for the draft results to be stored into
             string month, day, year;
             month = PutAZeroOnIt(DateTime.Now.Month);
             day = PutAZeroOnIt(DateTime.Now.Day);
-            year = DateTime.Now.Year.ToString().Substring(2,2); //ALL THIS STUFF SHOULD BE MOVED ELSEWHERE AND CALLED ONCE... otherwise, issues if draft goes past midnight into next day
+            year = DateTime.Now.Year.ToString().Substring(2, 2); //ALL THIS STUFF SHOULD BE MOVED ELSEWHERE AND CALLED ONCE... otherwise, issues if draft goes past midnight into next day
             string fileName = month + day + year + "_.txt"; //Add on Draft Name after _ later
             string filePath = DataPath + "\\DraftResults\\" + fileName;
 
@@ -303,6 +356,7 @@ namespace FantasyDraft
                 if (!File.Exists(filePath))
                 {
                     File.Create(filePath);
+                    DraftResultFile = filePath;
                 }
             }
             catch (Exception ex)
@@ -310,12 +364,9 @@ namespace FantasyDraft
                 MessageBox.Show(ex.ToString());
             }
 
-
-            //Find the player in the list of players
-            //Add them to team's roster... stored in txt file created above?
-            //Remove player from list of players
-            //Add player to list of already selected players?
+            
         }
+
 
         private string PutAZeroOnIt(int value)
         {
@@ -337,9 +388,9 @@ namespace FantasyDraft
             SelectPlayer(GrdBigBoard.SelectedItem);
         }
 
-        private void GrdBigBoard_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BtnCreateNewDraft_Click(object sender, RoutedEventArgs e)
         {
-
+            CreateDraftResultFile();
         }
     }
 }
