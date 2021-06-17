@@ -120,11 +120,13 @@
                 <AdornerDecorator>
                     <Grid>
                         <Label Content="Scheduled Start Date:" HorizontalAlignment="Left" Margin="448,254,0,0" VerticalAlignment="Top"/>
-                        <TextBox Name="TxtStartDate_Pre" HorizontalAlignment="Left" Margin="578,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+                        <TextBox Name="TxtStartDate_Pre" HorizontalAlignment="Left" Margin="578,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"
+                                 Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.StartDate}"/>
                         <Label Content="Scheduled Start Time:" HorizontalAlignment="Left" Margin="448,285,0,0" VerticalAlignment="Top"/>
-                        <TextBox Name="TxtStartTime_Pre" HorizontalAlignment="Left" Margin="578,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+                        <TextBox Name="TxtStartTime_Pre" HorizontalAlignment="Left" Margin="578,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"
+                                 Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.StartTime}"/>
                         <Label Content="Draft Countdown:" HorizontalAlignment="Left" Margin="859,254,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtDraftCountdown" HorizontalAlignment="Left" Margin="989,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+                        <TextBox x:Name="TxtDraftCountdown" HorizontalAlignment="Left" Margin="989,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
 
                         <TextBox x:Name="TxtDraftOrder" Margin="300,410,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalScrollBarVisibility="Auto" Height="18" HorizontalAlignment="Left" Width="994"
                                  IsReadOnly="True"/>
@@ -185,37 +187,6 @@
                         <TextBox Name="TxtStartTime" HorizontalAlignment="Left" Margin="269,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.StartTime}"/>
 
-                        <Label Content="Number of Fantasy Teams:" HorizontalAlignment="Left" Margin="682,193,0,0" VerticalAlignment="Top"/>
-                        <TextBox Name="TxtNumOfTeams" HorizontalAlignment="Left" Margin="834,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48"
-                                 Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfTeams}"/>
-
-                        <Label Content="Fantasy Team Name" HorizontalAlignment="Left" Margin="34,273,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Owner Name" HorizontalAlignment="Left" Margin="52,304,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Team 1" HorizontalAlignment="Left" Margin="231,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam1_Name" HorizontalAlignment="Left" Margin="177,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="TxtTeam1_Owner" HorizontalAlignment="Left" Margin="177,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <Label Content="Team 2" HorizontalAlignment="Left" Margin="393,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam2_Name" HorizontalAlignment="Left" Margin="337,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="TxtTeam2_Owner" HorizontalAlignment="Left" Margin="337,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <Label Content="Team 3" HorizontalAlignment="Left" Margin="551,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam3_Name" HorizontalAlignment="Left" Margin="497,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="TxtTeam3_Owner" HorizontalAlignment="Left" Margin="497,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <Label Content="Team 4" HorizontalAlignment="Left" Margin="711,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam4_Name" HorizontalAlignment="Left" Margin="657,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="TxtTeam4_Owner" HorizontalAlignment="Left" Margin="657,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <Label Content="Team 5" HorizontalAlignment="Left" Margin="871,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam5_Name" HorizontalAlignment="Left" Margin="817,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="TxtTeam5_Owner" HorizontalAlignment="Left" Margin="817,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <Label Content="Team 6" HorizontalAlignment="Left" Margin="1031,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam6_Name" HorizontalAlignment="Left" Margin="977,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="TxtTeam6_Owner" HorizontalAlignment="Left" Margin="977,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-                        <Label Content="Team 7" HorizontalAlignment="Left" Margin="1191,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam7_Name" HorizontalAlignment="Left" Margin="1137,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-                        <TextBox x:Name="TxtTeam7_Owner" HorizontalAlignment="Left" Margin="1137,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-                        <Label Content="Team 8" HorizontalAlignment="Left" Margin="1352,246,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtTeam8_Name" HorizontalAlignment="Left" Margin="1298,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-                        <TextBox x:Name="TxtTeam8_Owner" HorizontalAlignment="Left" Margin="1298,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-
                         <Label Content="Number Of:" HorizontalAlignment="Left" Margin="368,680,0,0" VerticalAlignment="Top"/>
                         <Label Content="QBs" HorizontalAlignment="Left" Margin="481,656,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="TxtNumOfQB" HorizontalAlignment="Left" Margin="473,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
@@ -254,20 +225,22 @@
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Fantasy Team Name" Width="300" CanUserSort="False">
                                     <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate/>
+                                        <DataTemplate>
+                                            <TextBox Name="TxtFantasyTeamName" Text="{Binding Path=NewDraftTeams.TeamName}"/>
+                                        </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Header="Owner Name" Width="250">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Rank}"/>
+                                            <TextBox Name="TxtOwnerName" Text="{Binding Path=NewDraftTeams.OwnerName}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button x:Name="BtnAddNewTeam" Content="Add New Team" HorizontalAlignment="Left" Margin="677,589,0,0" VerticalAlignment="Top" />
-                        <Button x:Name="BtnDeleteNewTeam" Content="Delete Team" HorizontalAlignment="Left" Margin="794,589,0,0" VerticalAlignment="Top" />
+                        <Button x:Name="BtnAddNewTeam" Content="Add New Team" HorizontalAlignment="Left" Margin="687,589,0,0" VerticalAlignment="Top" Click="BtnAddNewTeam_Click"/>
+                        <Button x:Name="BtnDeleteNewTeam" Content="Delete Team" HorizontalAlignment="Left" Margin="804,589,0,0" VerticalAlignment="Top" Click="BtnDeleteNewTeam_Click"/>
                     </Grid>
                 </AdornerDecorator>
             </TabItem>

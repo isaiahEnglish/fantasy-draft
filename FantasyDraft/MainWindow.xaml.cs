@@ -61,6 +61,10 @@ namespace FantasyDraft
 
             LeftToRightMarqueeText();
 
+            //New Draft
+            NewDraftTeams = new List<NewTeam>();
+            GrdNewDraftTeams.ItemsSource = NewDraftTeams;
+
         }
 
 
@@ -402,7 +406,7 @@ namespace FantasyDraft
             FileStream fileStream = new FileStream(DataPath + "\\FantasyDrafts\\FantasyDrafts.txt", FileMode.Append, FileAccess.Write);
             StreamWriter fileWriter = new StreamWriter(fileStream);
 
-            string newLine = FantasyDraftRecord.Name + "," + FantasyDraftRecord.StartDate + "," + FantasyDraftRecord.StartTime + "," + FantasyDraftRecord.NumOfTeams + "," +
+            string newLine = FantasyDraftRecord.Name + "," + FantasyDraftRecord.StartDate + "," + FantasyDraftRecord.StartTime + "," +
                 FantasyDraftRecord.NumOfQB + "," + FantasyDraftRecord.NumOfRB + "," + FantasyDraftRecord.NumOfWR + "," + FantasyDraftRecord.NumOfTE + "," + FantasyDraftRecord.NumOfFlex + "," +
                 FantasyDraftRecord.NumOfK + "," + FantasyDraftRecord.NumOfDEF;
 
@@ -432,10 +436,6 @@ namespace FantasyDraft
             {
                 //More validation
                 message += "A Start Time is required\n";
-            }
-            if (FantasyDraftRecord.NumOfTeams == 0)
-            {
-                message += "The Number of Teams is required\n";
             }
             if (FantasyDraftRecord.NumOfQB == 0)
             {
@@ -526,7 +526,7 @@ namespace FantasyDraft
         /// <param name="e"></param>
         private void BtnCreateNewDraft_Click(object sender, RoutedEventArgs e)
         {
-            TxtDraftName.Text = TxtStartDate.Text = TxtStartTime.Text = TxtNumOfTeams.Text = string.Empty;
+            TxtDraftName.Text = TxtStartDate.Text = TxtStartTime.Text = string.Empty;
             
         }
 
@@ -568,17 +568,26 @@ namespace FantasyDraft
                         Name = drafts[0],
                         StartDate = DateTime.Parse(drafts[1]),
                         StartTime = DateTime.Parse(drafts[2]),
-                        NumOfTeams = int.Parse(drafts[3]),
-                        NumOfQB = int.Parse(drafts[4]),
-                        NumOfRB = int.Parse(drafts[5]),
-                        NumOfWR = int.Parse(drafts[6]),
-                        NumOfTE = int.Parse(drafts[7]),
-                        NumOfFlex = int.Parse(drafts[8]),
-                        NumOfK = int.Parse(drafts[9]),
-                        NumOfDEF = int.Parse(drafts[10])
+                        NumOfQB = int.Parse(drafts[3]),
+                        NumOfRB = int.Parse(drafts[4]),
+                        NumOfWR = int.Parse(drafts[5]),
+                        NumOfTE = int.Parse(drafts[6]),
+                        NumOfFlex = int.Parse(drafts[7]),
+                        NumOfK = int.Parse(drafts[8]),
+                        NumOfDEF = int.Parse(drafts[9])
                     };
                 }
             }
+        }
+
+        private void BtnAddNewTeam_Click(object sender, RoutedEventArgs e)
+        {
+            NewDraftTeams.Add(new NewTeam());
+        }
+
+        private void BtnDeleteNewTeam_Click(object sender, RoutedEventArgs e)
+        {
+            NewDraftTeams.Remove(NewDraftTeams[GrdNewDraftTeams.SelectedIndex]);
         }
     }
 
