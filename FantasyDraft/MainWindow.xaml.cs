@@ -52,7 +52,7 @@ namespace FantasyDraft
 
 
             //Load previous drafts into list of drafts
-            CboLoadedDrafts.ItemsSource = LoadPreviousDraftList();
+            SavedDraftsList = LoadPreviousDraftList();
 
 
             //Load football player data from CSV
@@ -73,6 +73,8 @@ namespace FantasyDraft
         public string DataPath { get; set; }
 
         public string DraftResultFile { get; set; }
+
+        public List<NewTeam> NewDraftTeams { get; set; }
 
 
         // Property that keeps track of the status of the draft... Predraft, Middraft, or Post-Draft
@@ -113,7 +115,7 @@ namespace FantasyDraft
         public static readonly DependencyProperty ListOfFootballPlayersProperty =
             DependencyProperty.Register("ListOfFootballPlayers", typeof(List<FootballPlayer>), typeof(MainWindow));
 
-
+        
 
 
         public FantasyDraftSettings FantasyDraftRecord
@@ -126,6 +128,18 @@ namespace FantasyDraft
         public static readonly DependencyProperty FantasyDraftRecordProperty =
             DependencyProperty.Register("FantasyDraftRecord", typeof(FantasyDraftSettings), typeof(MainWindow));
 
+
+
+
+        public List<string> SavedDraftsList
+        {
+            get { return (List<string>)GetValue(SavedDraftsListProperty); }
+            set { SetValue(SavedDraftsListProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SavedDraftsList.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SavedDraftsListProperty =
+            DependencyProperty.Register("SavedDraftsList", typeof(List<string>), typeof(MainWindow));
 
 
 
@@ -401,58 +415,58 @@ namespace FantasyDraft
         /// <summary>
         /// Make sure all draft information is entered properly before saving
         /// </summary>
-        private bool ValidateNewDraft()
+        private string ValidateNewDraft()
         {
-            bool save = true;
+            string message = string.Empty;
 
             if (string.IsNullOrEmpty(FantasyDraftRecord.Name))
             {
-                save = false;
+                message += "A Draft Name is required\n";
             }
             if (FantasyDraftRecord.StartDate == null)
             {
                 //More validation
-                save = false;
+                message += "A Start Date is required\n";
             }
             if (FantasyDraftRecord.StartTime == null)
             {
                 //More validation
-                save = false;
+                message += "A Start Time is required\n";
             }
             if (FantasyDraftRecord.NumOfTeams == 0)
             {
-                save = false;
+                message += "The Number of Teams is required\n";
             }
             if (FantasyDraftRecord.NumOfQB == 0)
             {
-                save = false;
+                message += "The Number of QBs is required\n";
             }
             if (FantasyDraftRecord.NumOfRB == 0)
             {
-                save = false;
+                message += "The Number of RBs is required\n";
             }
             if (FantasyDraftRecord.NumOfWR == 0)
             {
-                save = false;
+                message += "The Number of WRs is required\n";
             }
             if (FantasyDraftRecord.NumOfTE == 0)
             {
-                save = false;
+                message += "The Number of TEs is required\n";
             }
             if (FantasyDraftRecord.NumOfFlex == 0)
             {
-                save = false;
+                message += "The Number of Flex is required\n";
             }
             if (FantasyDraftRecord.NumOfK == 0)
             {
-                save = false;
+                message += "The Number of Ks is required\n";
             }
             if (FantasyDraftRecord.NumOfDEF == 0)
             {
-                save = false;
+                message += "The Number of DEFs is required\n";
             }
 
-            return save;
+            return message;
         }
 
 
@@ -505,16 +519,37 @@ namespace FantasyDraft
             SelectPlayer(GrdBigBoard.SelectedItem);
         }
 
+        /// <summary>
+        /// Clear settings textboxes, make a new FantasyDraftSettings instance and assign to FantasyDraftRecord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCreateNewDraft_Click(object sender, RoutedEventArgs e)
         {
-            //Clear settings textboxes, make a new FantasyDraftSettings instance and assign to FantasyDraftRecord
+            TxtDraftName.Text = TxtStartDate.Text = TxtStartTime.Text = TxtNumOfTeams.Text = string.Empty;
+            
         }
 
+        /// <summary>
+        /// Save the newly created Fantasy Draft
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnSaveNewDraft_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateNewDraft())
+            string message = ValidateNewDraft();
+            if (string.IsNullOrEmpty(message))
             {
-                InsertNewDraft();
+                //Confirm new draft
+                if (MessageBox.Show("Are you sure you want to create a new Fantasy Draft?","Create New Draft",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    InsertNewDraft();
+                }
+            }
+            else
+            {
+                //Errors found in validation
+                MessageBox.Show(message, "Could Not Create Draft", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -545,5 +580,11 @@ namespace FantasyDraft
                 }
             }
         }
+    }
+
+    public class NewTeam
+    {
+        public string TeamName { get; set; }
+        public string OwnerName { get; set; }
     }
 }

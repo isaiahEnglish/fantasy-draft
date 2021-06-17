@@ -12,6 +12,7 @@
 
     <Window.Resources>
         <converters:DraftStateConverter x:Key="DraftStateConverter"/>
+        <converters:EnabledConverter x:Key="EnabledConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -215,30 +216,58 @@
                         <TextBox x:Name="TxtTeam8_Name" HorizontalAlignment="Left" Margin="1298,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
                         <TextBox x:Name="TxtTeam8_Owner" HorizontalAlignment="Left" Margin="1298,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
 
-                        <Label Content="Number Of:" HorizontalAlignment="Left" Margin="368,500,0,0" VerticalAlignment="Top"/>
-                        <Label Content="QBs" HorizontalAlignment="Left" Margin="481,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfQB" HorizontalAlignment="Left" Margin="473,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
+                        <Label Content="Number Of:" HorizontalAlignment="Left" Margin="368,680,0,0" VerticalAlignment="Top"/>
+                        <Label Content="QBs" HorizontalAlignment="Left" Margin="481,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfQB" HorizontalAlignment="Left" Margin="473,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfQB}"/>
-                        <Label Content="RBs" HorizontalAlignment="Left" Margin="578,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfRB" HorizontalAlignment="Left" Margin="570,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
+                        <Label Content="RBs" HorizontalAlignment="Left" Margin="578,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfRB" HorizontalAlignment="Left" Margin="570,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfRB}"/>
-                        <Label Content="WRs" HorizontalAlignment="Left" Margin="677,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfWR" HorizontalAlignment="Left" Margin="671,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
+                        <Label Content="WRs" HorizontalAlignment="Left" Margin="677,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfWR" HorizontalAlignment="Left" Margin="671,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfWR}"/>
-                        <Label Content="TEs" HorizontalAlignment="Center" Margin="0,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfTE" HorizontalAlignment="Center" Margin="0,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
+                        <Label Content="TEs" HorizontalAlignment="Center" Margin="0,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfTE" HorizontalAlignment="Center" Margin="0,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfTE}"/>
-                        <Label Content="Flex" HorizontalAlignment="Left" Margin="884,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfFlex" HorizontalAlignment="Left" Margin="876,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
+                        <Label Content="Flex" HorizontalAlignment="Left" Margin="884,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfFlex" HorizontalAlignment="Left" Margin="876,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfFlex}"/>
-                        <Label Content="Ks" HorizontalAlignment="Left" Margin="984,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfK" HorizontalAlignment="Left" Margin="972,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
+                        <Label Content="Ks" HorizontalAlignment="Left" Margin="984,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfK" HorizontalAlignment="Left" Margin="972,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfK}"/>
-                        <Label Content="DEFs" HorizontalAlignment="Left" Margin="1068,476,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="TxtNumOfDef" HorizontalAlignment="Left" Margin="1063,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
+                        <Label Content="DEFs" HorizontalAlignment="Left" Margin="1068,656,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TxtNumOfDef" HorizontalAlignment="Left" Margin="1063,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"
                                  Text="{Binding ElementName=FantasyDraftWindow, Path=FantasyDraftRecord.NumOfDEF}"/>
-                        <Button Name="BtnCreateNewFantasyDraft" Content="Create New Fantasy Draft" HorizontalAlignment="Left" Margin="551,659,0,0" VerticalAlignment="Top" Click="BtnCreateNewDraft_Click"/>
-                        <Button x:Name="BtnSaveNewFantasyDraft" Content="Save New Fantasy Draft" HorizontalAlignment="Left" Margin="793,659,0,0" VerticalAlignment="Top" Click="BtnSaveNewDraft_Click"/>
+                        <Button Name="BtnCreateNewFantasyDraft" Content="Create New Fantasy Draft" HorizontalAlignment="Left" Margin="552,731,0,0" VerticalAlignment="Top" Click="BtnCreateNewDraft_Click">
+                            <!--<Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource EnabledConverter}">
+                                    <Binding Path="TxtDraftName.Text"/>
+                                    <Binding Path="SavedDraftsList"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>-->
+                        </Button>
+                        <Button x:Name="BtnSaveNewFantasyDraft" Content="Save New Fantasy Draft" HorizontalAlignment="Left" Margin="794,731,0,0" VerticalAlignment="Top" Click="BtnSaveNewDraft_Click"/>
+                        <DataGrid x:Name="GrdNewDraftTeams" Margin="521,265,521,295" >
+                            <DataGrid.CellStyle>
+                                <Style/>
+                            </DataGrid.CellStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Fantasy Team Name" Width="300" CanUserSort="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate/>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Owner Name" Width="250">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Rank}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="BtnAddNewTeam" Content="Add New Team" HorizontalAlignment="Left" Margin="677,589,0,0" VerticalAlignment="Top" />
+                        <Button x:Name="BtnDeleteNewTeam" Content="Delete Team" HorizontalAlignment="Left" Margin="794,589,0,0" VerticalAlignment="Top" />
                     </Grid>
                 </AdornerDecorator>
             </TabItem>
